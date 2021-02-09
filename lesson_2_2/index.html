@@ -19,10 +19,10 @@
 		  {{ task.text }}
 		</div>
 	  </div>
-	  <div class="form">
-		<input :placeholder="message" v-model:value="message" @keyup.enter="submit">
-		<button type="button" v-bind:title="current_title" @click="submit">Добавить</button>
-	  </div>  
+	  <form @submit.prevent="submit" action="#">
+		<input type="text" size="30" :placeholder="message" v-model:value="message">
+		<input type="submit" v-bind:title="current_title" value="Добавить">
+	  </form>
 	
 	<transition name="fade bounce">
 		<img src="https://pbs.twimg.com/media/BG2zfl6CEAEWL3B.jpg" v-show="count() == 0"> 
