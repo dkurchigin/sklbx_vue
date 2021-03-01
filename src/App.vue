@@ -1,23 +1,7 @@
 <template>
   <section class="catalog">
 
-        <ul class="catalog__list">
-          <li class="catalog__item" v-for="(product, index) in getProducts" :key="index">
-            <a class="catalog__pic" href="#">
-              <img :src="product.img" :alt="product.title">
-            </a>
-
-            <h3 class="catalog__title">
-              <a href="#">
-                {{ product.title }}
-              </a>
-            </h3>
-
-            <span class="catalog__price">
-              {{ product.price }}
-            </span>
-          </li>
-        </ul>
+      <ProductList :products="getProducts"></ProductList>
       <BasePagination v-model="page" :count="countProducts"
       :per-page="productsPerPage"></BasePagination>
       </section>
@@ -26,10 +10,11 @@
 <script>
 import products from './data/products';
 import BasePagination from './components/BasePagination.vue';
+import ProductList from './components/ProductList.vue';
 
 export default {
   name: 'App',
-  components: { BasePagination },
+  components: { BasePagination, ProductList },
   data() {
     return {
       page: 1,
