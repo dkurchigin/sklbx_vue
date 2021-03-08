@@ -39,11 +39,7 @@ export default {
   props: ['page', 'count', 'perPage'],
   methods: {
     paginate(page) {
-      if (page === 0) {
-        this.$emit('paginate', 1);
-      } else if (page > this.pages) {
-        this.$emit('paginate', this.pages);
-      } else {
+      if (page > 0 && page <= this.pages) {
         this.$emit('paginate', page);
       }
     },
