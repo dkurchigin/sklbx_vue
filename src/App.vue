@@ -61,16 +61,7 @@ export default {
       }
       if (this.filterColor) {
         // eslint-disable-next-line max-len
-        let coloredProducts;
-
-        filteredProducts.forEach((item) => {
-          if (item.colors.includes(this.filterColor)) {
-            coloredProducts.push(item);
-          }
-        });
-        alert(coloredProducts.length);
-        // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.colors.includes(this.filterColor));
+        filteredProducts = filteredProducts.filter((product) => product.colors.some((element) => element === this.filterColor));
       }
       return filteredProducts;
     },
