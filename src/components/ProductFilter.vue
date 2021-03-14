@@ -29,16 +29,7 @@
 
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <ul class="colors">
-          <li class="colors__item" v-for="color in colors" :key="color.id">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio"
-                     :value="color.id" v-model="currentColor">
-              <span class="colors__value" :style="{'background-color': color.value}">
-                  </span>
-            </label>
-          </li>
-        </ul>
+        <ColorBlock :colors="colors" :current-color.sync="currentColor"></ColorBlock>
       </fieldset>
 
       <fieldset class="form__block">
@@ -115,10 +106,12 @@
 </template>
 
 <script>
+import ColorBlock from '@/components/ColorBlock.vue';
 import categories from '../data/categories';
 import colors from '../data/colors';
 
 export default {
+  components: { ColorBlock },
   props: ['priceFrom', 'priceTo', 'categoryId', 'colorId'],
   data() {
     return {

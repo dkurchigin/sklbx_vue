@@ -19,4 +19,8 @@ export default [
     id: 5,
     value: '#FF6B00',
   },
+  {
+    id: 6,
+    value: '#F66',
+  },
 ];
