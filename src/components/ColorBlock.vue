@@ -11,6 +11,12 @@
   </ul>
 </template>
 
+<style>
+  .colors_black  {
+    --border-color: black;
+  }
+</style>
+
 <script>
 export default {
   name: 'ColorBlock',

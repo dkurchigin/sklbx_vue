@@ -15,7 +15,8 @@
     </span>
 
     <ul class="colors colors--black">
-      <ColorBlock :colors="getColors" :current-color.sync="getColors[0]"></ColorBlock>
+      <ColorBlock class="colors_black" :colors="productColors"
+                  :current-color.sync="color"></ColorBlock>
     </ul>
   </li>
 </template>
@@ -28,20 +29,13 @@ export default {
   components: { ColorBlock },
   data() {
     return {
-      color: '#73b6ea',
+      color: this.product.colors[0],
     };
   },
   props: ['product'],
   computed: {
-    getColors() {
-      const trueColors = [];
-
-      const colorsIds = this.product.colors;
-      // eslint-disable-next-line no-plusplus
-      colorsIds.forEach((item) => {
-        trueColors.push(colors.filter((color) => color.id === item)[0]);
-      });
-      return trueColors;
+    productColors() {
+      return this.product.colors.map((id) => colors.find((c) => c.id === id));
     },
   },
 };
