@@ -222,6 +222,7 @@
 <script>
 export default {
   name: 'ProductPage',
+  props: ['pageParams'],
 };
 </script>
 
