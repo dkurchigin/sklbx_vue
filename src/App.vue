@@ -1,5 +1,5 @@
 <template>
-  <component :is="currentPageComponent" :page-params="CurrentPageParams"></component>
+  <component :is="currentPageComponent" :page-params="currentPageParams"></component>
 </template>
 
 <script>
@@ -19,13 +19,13 @@ export default {
   data() {
     return {
       currentPage: 'main',
-      CurrentPageParams: {},
+      currentPageParams: {},
     };
   },
   methods: {
     gotoPage(pageName, pageParams) {
       this.currentPage = pageName;
-      this.currentPageComponent = pageParams || {};
+      this.currentPageParams = pageParams || {};
     },
   },
   computed: {

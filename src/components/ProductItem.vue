@@ -1,7 +1,7 @@
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#"
-       @click.prevent="gotoPage('product', {id: product.id})">
+       @click.prevent="gotoPage('product', {'id': product.id})">
       <img :src="product.img" :alt="product.title">
     </a>
 
@@ -12,7 +12,7 @@
     </h3>
 
     <span class="catalog__price">
-      {{ product.price }}
+      {{ product.price | numberFormat }}
     </span>
 
     <ul class="colors colors--black">
@@ -24,7 +24,8 @@
 
 <script>
 import ColorBlock from '@/components/ColorBlock.vue';
-import eventBus from '@/eventBus';
+import gotoPage from '@/helpers/gotoPage';
+import numberFormat from '@/helpers/numberFormat';
 import colors from '../data/colors';
 
 export default {
@@ -40,10 +41,11 @@ export default {
       return this.product.colors.map((id) => colors.find((c) => c.id === id));
     },
   },
+  filters: {
+    numberFormat,
+  },
   methods: {
-    gotoPage(pageName, pageParams) {
-      eventBus.$emit('gotoPage', pageName, pageParams);
-    },
+    gotoPage,
   },
 };
 </script>
