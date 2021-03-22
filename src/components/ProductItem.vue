@@ -1,7 +1,7 @@
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#"
-       @click.prevent="$emit('gotoPage', 'product', {id: product.id})">
+       @click.prevent="gotoPage('product', {id: product.id})">
       <img :src="product.img" :alt="product.title">
     </a>
 
@@ -24,6 +24,7 @@
 
 <script>
 import ColorBlock from '@/components/ColorBlock.vue';
+import eventBus from '@/eventBus';
 import colors from '../data/colors';
 
 export default {
@@ -37,6 +38,11 @@ export default {
   computed: {
     productColors() {
       return this.product.colors.map((id) => colors.find((c) => c.id === id));
+    },
+  },
+  methods: {
+    gotoPage(pageName, pageParams) {
+      eventBus.$emit('gotoPage', pageName, pageParams);
     },
   },
 };

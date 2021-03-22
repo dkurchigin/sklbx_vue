@@ -15,8 +15,7 @@
                      :color-id.sync="filterColor"></ProductFilter>
       <section class="catalog">
 
-        <ProductList :products="getProducts" @gotoPage="(pageName, pageParams) =>
-                 $emit('gotoPage', pageName, pageParams)"></ProductList>
+        <ProductList :products="getProducts"></ProductList>
         <BasePagination v-model="page" :count="countProducts"
                         :per-page="productsPerPage"></BasePagination>
       </section>
