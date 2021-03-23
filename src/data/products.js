@@ -3,7 +3,7 @@ export default [
     id: 1,
     categoryId: 4,
     title: 'Радионяня',
-    price: 3546,
+    price: 'test',
     img: 'img/radio.jpg',
     colors: [1, 3, 4],
   },

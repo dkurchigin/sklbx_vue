@@ -1,3 +1,7 @@
 export default function numberFormat(value) {
-  return Intl.NumberFormat().format(value);
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(value)) {
+    return '';
+  }
+  return Intl.NumberFormat().format(value) || '';
 }
