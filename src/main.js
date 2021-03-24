@@ -1,13 +1,15 @@
 import Vue from 'vue';
+import router from '@/router';
 import App from './App.vue';
-import { first_message, second_message } from './data';
-import alert_function from './alerts';
+import { firstMessage, secondMessage } from './data';
+import alertFunction from './alerts';
 
 Vue.config.productionTip = false;
 
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount('#app');
 
-alert_function(first_message);
-alert_function(second_message);
+alertFunction(firstMessage);
+alertFunction(secondMessage);

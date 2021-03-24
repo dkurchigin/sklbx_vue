@@ -1,2 +1,2 @@
-export const first_message = 'Первая строка';
-export const second_message = 'Вторая строка';
+export const firstMessage = 'Первая строка';
+export const secondMessage = 'Вторая строка';
