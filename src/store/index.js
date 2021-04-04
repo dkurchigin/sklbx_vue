@@ -24,6 +24,17 @@ export default new Vuex.Store({
         });
       }
     },
+    updateCartProductAmount(state, { productId, amount }) {
+      // eslint-disable-next-line no-shadow
+      const item = state.cartProducts.find((item) => item.productId === productId);
+
+      if (item) {
+        item.amount = amount;
+      }
+    },
+    deleteCartProduct(state, productId) {
+      state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
+    },
   },
   getters: {
     cardDetailProducts(state) {
