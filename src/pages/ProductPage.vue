@@ -41,31 +41,9 @@
 
             <fieldset class="form__block">
               <legend class="form__legend">Цвет:</legend>
-              <ul class="colors">
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                           name="color-item" value="blue" checked="">
-                    <span class="colors__value" style="background-color: #73B6EA;">
-                    </span>
-                  </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                           name="color-item" value="yellow">
-                    <span class="colors__value" style="background-color: #FFBE15;">
-                    </span>
-                  </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                           name="color-item" value="gray">
-                    <span class="colors__value" style="background-color: #939393;">
-                  </span></label>
-                </li>
-              </ul>
+
+              <ColorBlock class="colors" :colors="productColors"
+                          :current-color.sync="color"></ColorBlock>
             </fieldset>
 
             <fieldset class="form__block">
@@ -101,24 +79,7 @@
             </fieldset>
 
             <div class="item__row">
-              <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар"
-                        @click.prevent="changeAmount(-1)">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-minus"></use>
-                  </svg>
-                </button>
-
-                <input type="text" v-model.number="productAmount">
-
-                <button type="button" aria-label="Добавить один товар"
-                        @click.prevent="changeAmount(1)">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-plus"></use>
-                  </svg>
-                </button>
-              </div>
-
+              <ItemCounter :count.sync="productAmount"/>
               <button class="button button--primery" type="submit">
                 В корзину
               </button>
@@ -200,23 +161,47 @@ import products from '@/data/products';
 import categories from '@/data/categories';
 import gotoPage from '@/helpers/gotoPage';
 import numberFormat from '@/helpers/numberFormat';
+import ColorBlock from '@/components/ColorBlock.vue';
+import colors from '@/data/colors';
+import ItemCounter from '@/components/ItemCounter.vue';
 
 export default {
   data() {
     return {
       productAmount: 1,
+      color: 0,
     };
   },
   name: 'ProductPage',
+  components: { ColorBlock, ItemCounter },
   filters: {
     numberFormat,
   },
   computed: {
+    productColors() {
+      return this.product.colors.map((id) => colors.find((c) => c.id === id));
+    },
     product() {
       return products.find((product) => product.id === +this.$route.params.id);
     },
     category() {
       return categories.find((category) => category.id === this.product.categoryId);
+    },
+  },
+  created() {
+    // eslint-disable-next-line prefer-destructuring
+    this.color = this.product.colors[0];
+  },
+  watch: {
+    calcColor() {
+      // eslint-disable-next-line prefer-destructuring
+      this.color = this.product.colors[0];
+    },
+    // eslint-disable-next-line func-names
+    '$route.params.id': function () {
+      if (!this.product) {
+        this.$router.replace({ name: 'notFound' });
+      }
     },
   },
   methods: {
@@ -226,12 +211,6 @@ export default {
         'addProductToCart',
         { productId: this.product.id, amount: this.productAmount },
       );
-    },
-    changeAmount(value) {
-      const currentAmount = this.productAmount;
-      if (currentAmount !== 0 || (currentAmount === 0 && value > 0)) {
-        this.productAmount += value;
-      }
     },
   },
 };

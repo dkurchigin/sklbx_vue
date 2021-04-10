@@ -12,21 +12,7 @@
                 Артикул: {{ item.product.id }}
               </span>
 
-    <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар" @click.prevent="littleChangeAmount(-1)">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-
-      <input type="text" v-model.number="amount" name="count">
-
-      <button type="button" aria-label="Добавить один товар" @click.prevent="littleChangeAmount(1)">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div>
+    <ItemCounter class="product__counter" :count.sync="amount"/>
 
     <b class="product__price">
       {{ (item.amount * item.product.price) | numberFormat }} ₽
@@ -44,9 +30,11 @@
 <script>
 import numberFormat from '@/helpers/numberFormat';
 import { mapMutations } from 'vuex';
+import ItemCounter from '@/components/ItemCounter.vue';
 
 export default {
   name: 'CartItem',
+  components: { ItemCounter },
   props: ['item'],
   filters: {
     numberFormat,
@@ -63,12 +51,6 @@ export default {
   },
   methods: {
     ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
-    littleChangeAmount(value) {
-      const currentAmount = this.amount;
-      if (currentAmount !== 0 || (currentAmount === 0 && value > 0)) {
-        this.$store.commit('updateCartProductAmount', { productId: this.item.productId, amount: currentAmount + value });
-      }
-    },
   },
 };
 </script>
