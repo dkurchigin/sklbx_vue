@@ -1,7 +1,7 @@
 <template>
     <div class="form__counter">
       <button type="button" aria-label="Убрать один товар"
-              @click.prevent="changeAmount(-1)">
+              @click.prevent="productAmount--">
         <svg width="12" height="12" fill="currentColor">
           <use xlink:href="#icon-minus"></use>
         </svg>
@@ -10,7 +10,7 @@
       <input type="text" v-model.number="productAmount">
 
       <button type="button" aria-label="Добавить один товар"
-              @click.prevent="changeAmount(1)">
+              @click.prevent="productAmount++">
         <svg width="12" height="12" fill="currentColor">
           <use xlink:href="#icon-plus"></use>
         </svg>
@@ -27,17 +27,12 @@ export default {
       get() {
         return this.count;
       },
+      // eslint-disable-next-line consistent-return
       set(value) {
-        return this.$emit('update:count', value);
+        if (value >= 1) {
+          return this.$emit('update:count', value);
+        }
       },
-    },
-  },
-  methods: {
-    changeAmount(value) {
-      const currentAmount = this.productAmount;
-      if (currentAmount + value > 0) {
-        this.productAmount += value;
-      }
     },
   },
 };
