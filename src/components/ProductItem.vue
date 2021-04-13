@@ -1,7 +1,7 @@
 <template>
   <li class="catalog__item">
     <router-link class="catalog__pic" :to="{name: 'product', params: {id: product.id}}">
-      <img :src="product.img" :alt="product.title">
+      <img :src="product.image" :alt="product.title">
     </router-link>
 
     <h3 class="catalog__title">
