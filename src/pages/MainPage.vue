@@ -73,7 +73,6 @@ export default {
         return {
           ...product,
           image: product.image.file.url,
-          // colors: product.colors.id,
         };
       }) : [];
     },

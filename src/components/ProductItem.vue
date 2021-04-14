@@ -25,19 +25,18 @@
 import ColorBlock from '@/components/ColorBlock.vue';
 import gotoPage from '@/helpers/gotoPage';
 import numberFormat from '@/helpers/numberFormat';
-import colors from '../data/colors';
 
 export default {
   components: { ColorBlock },
   data() {
     return {
-      color: this.product.colors[0],
+      color: this.product.colors[0].id,
     };
   },
   props: ['product'],
   computed: {
     productColors() {
-      return this.product.colors.map((id) => colors.find((c) => c.id === id));
+      return this.product.colors;
     },
   },
   filters: {
