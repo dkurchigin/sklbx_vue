@@ -14,7 +14,7 @@
                      :category-id.sync="filterCategoryId"
                      :color-id.sync="filterColor"></ProductFilter>
       <section class="catalog">
-        <PreUploader v-if="productsLoading"></PreUploader>
+        <PreUploader v-if="productsLoading"/>
         <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров
           <button @click.prevent="loadProducts">Попробовать ещё раз</button>
         </div>
