@@ -14,7 +14,10 @@
                      :category-id.sync="filterCategoryId"
                      :color-id.sync="filterColor"></ProductFilter>
       <section class="catalog">
-
+        <PreUploader v-if="productsLoading"></PreUploader>
+        <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров
+          <button @click.prevent="loadProducts">Попробовать ещё раз</button>
+        </div>
         <ProductList :products="getProducts"></ProductList>
         <BasePagination v-model="page" :count="countProducts"
                         :per-page="productsPerPage"></BasePagination>
@@ -29,10 +32,15 @@ import ProductList from '@/components/ProductList.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
+// ПОДСКАЖИТЕ КАК ПОДКЛЮЧИТЬ ВЕБПАК!!!!
+// ТАК И НЕ ПОНЯЛ ВСЕХ ХИТРОСПЛЕТЕНИЙ
+import PreUploader from '@/components/PreUploader.vue';
 
 export default {
   name: 'MainApp',
-  components: { BasePagination, ProductList, ProductFilter },
+  components: {
+    BasePagination, ProductList, ProductFilter, PreUploader,
+  },
   data() {
     return {
       filterPriceFrom: 0,
@@ -42,6 +50,8 @@ export default {
       page: 1,
       productsPerPage: 3,
       productsData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
   computed: {
@@ -60,6 +70,8 @@ export default {
   },
   methods: {
     loadProducts() {
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
       clearTimeout(this.loadProductTimer);
       this.loadProductTimer = setTimeout(() => {
         axios.get(`${API_BASE_URL}/api/products`, {
@@ -73,7 +85,11 @@ export default {
           },
         })
           // eslint-disable-next-line no-return-assign,arrow-parens
-          .then(response => this.productsData = response.data);
+          .then(response => this.productsData = response.data)
+          // eslint-disable-next-line no-return-assign
+          .catch(() => this.productsLoadingFailed = true)
+          // eslint-disable-next-line no-return-assign
+          .then(() => this.productsLoading = false);
       }, 0);
     },
   },
