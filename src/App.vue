@@ -5,8 +5,8 @@
         <span class="header__info">Каталог</span>
 
         <router-link class="header__logo" :to="{name: 'main'}">
-          <img src="img/svg/logo-tech.svg" alt="Логотип интернет магазина Технозавррр"
-               width="190" height="33">
+            <img src="img/svg/logo-tech.svg" alt="Логотип интернет магазина Технозавррр"
+                 width="190" height="33">
         </router-link>
 
         <a class="header__tel" href="tel:8 800 600 90 09">
@@ -116,9 +116,27 @@
 
 <script>
 import CartIndicator from '@/components/CartIndicator.vue';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   components: { CartIndicator },
+  created() {
+    const userAccessKey = localStorage.getItem('userAccessKey');
+    if (userAccessKey) {
+      this.updateUserAccessKey(userAccessKey);
+    }
+    // eslint-disable-next-line no-unused-expressions
+    this.loadCart();
+  },
+  computed: {
+    ...mapGetters({
+      cartLoading: 'cartLoading',
+    }),
+  },
+  methods: {
+    ...mapActions(['loadCart']),
+    ...mapMutations(['updateUserAccessKey']),
+  },
 };
 </script>
