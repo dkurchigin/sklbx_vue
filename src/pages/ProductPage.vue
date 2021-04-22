@@ -26,7 +26,7 @@
       <section class="item">
         <div class="item__pics pics">
           <div class="pics__wrapper">
-            <img width="570" height="570" :src="product.img"
+            <img width="570" height="570" :src="product.image.file.url"
                  alt="product.title">
           </div>
         </div>
@@ -83,10 +83,14 @@
 
               <div class="item__row">
                 <ItemCounter :count.sync="productAmount"/>
-                <button class="button button--primery" type="submit">
+                <button class="button button--primery" type="submit" :disabled="productAddSending">
                   В корзину
                 </button>
               </div>
+
+              <div v-show="productAdded">Товар добавлен в корзину</div>
+              <div v-show="productAddSending">Добавляем товар в корзину...</div>
+
             </form>
           </div>
         </div>
@@ -168,6 +172,7 @@ import ItemCounter from '@/components/ItemCounter.vue';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 import PreUploader from '@/components/PreUploader.vue';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -178,6 +183,8 @@ export default {
       productLoading: false,
       productLoadingFailed: false,
       have404: false,
+      productAdded: false,
+      productAddSending: false,
     };
   },
   name: 'ProductPage',
@@ -213,16 +220,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addProductToCart']),
     gotoPage,
     addToCard() {
-      this.$store.commit(
-        'addProductToCart',
-        { productId: this.product.id, amount: this.productAmount },
-      );
+      this.productAdded = false;
+      this.productAddSending = true;
+      this.addProductToCart({ productId: this.product.id, amount: this.productAmount })
+        .then(() => {
+          this.productAdded = true;
+          this.productAddSending = false;
+        });
     },
     loadProduct() {
       this.productLoading = true;
       this.productLoadingFailed = false;
+
       this.have404 = false;
       clearTimeout(this.loadProductTimer);
       this.loadProductTimer = setTimeout(() => {

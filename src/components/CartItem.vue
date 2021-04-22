@@ -5,7 +5,7 @@
            alt="item.product.title">
     </div>
     <h3 class="product__title">
-      Смартфон Xiaomi Redmi Note 7 Pro 6/128GB
+      {{ item.product.title }}
     </h3>
 
     <span class="product__code">
@@ -29,7 +29,7 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import ItemCounter from '@/components/ItemCounter.vue';
 
 export default {
@@ -45,12 +45,12 @@ export default {
         return this.item.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', { productId: this.item.productId, amount: value });
+        this.$store.dispatch('updateCartProductAmount', { productId: this.item.productId, amount: value });
       },
     },
   },
   methods: {
-    ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
+    ...mapActions({ deleteProduct: 'deleteCartProduct' }),
   },
 };
 </script>
