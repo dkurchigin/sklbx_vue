@@ -151,7 +151,7 @@ export default {
       this.cartLoading = true;
       this.cartLoadingFailed = false;
 
-      return (new Promise((resolve) => setTimeout(resolve, 3000)))
+      return (new Promise((resolve) => setTimeout(resolve, 0)))
         // eslint-disable-next-line arrow-body-style
         .then(() => {
           return axios.post(`${API_BASE_URL}/api/orders`, {
