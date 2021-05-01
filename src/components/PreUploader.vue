@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div><h3 style="text-align: center;">Загрузка товаров...</h3></div>
+    <div><h3 style="text-align: center;">{{ title }}</h3></div>
     <br>
     <br>
     <div class="preloader-1">
@@ -25,6 +25,12 @@
 <script>
 export default {
   name: 'PreUploader',
+  props: {
+    title: {
+      type: String,
+      default: 'Идёт загрузка товаров...',
+    },
+  },
 };
 </script>
 
