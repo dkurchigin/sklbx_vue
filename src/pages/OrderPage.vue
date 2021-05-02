@@ -107,7 +107,8 @@
           </p>
         </div>
         <PreUploader title="Идёт отправка заказа" v-if="cartLoading"/>
-        <div v-if="cartLoadingFailed">Произошла ошибка при оформлении заказа, обновите страницу
+        <div v-if="cartLoadingFailed && !formError">
+          Произошла ошибка при оформлении заказа, обновите страницу
         </div>
       </form>
     </section>
@@ -167,6 +168,7 @@ export default {
             .catch((error) => {
               this.formError = error.response.data.error.request || {};
               this.formErrorMessage = error.response.data.error.message;
+              this.cartLoading = false;
               this.cartLoadingFailed = true;
             });
         });
